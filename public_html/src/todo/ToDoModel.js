@@ -130,17 +130,8 @@ export default class ToDoModel {
             this.view.viewList(this.currentList);
         }
     }
-/*
-    frontList(listId) {
-        let temp = this.toDoLists[listId];
-        for (let i = listId; i > 0; i--) {
-            this.toDoLists[i] = this.toDoLists[i-1];
-        }
-        this.toDoLists[0] = temp;
-        console.log("did it");
-        console.log(this.toDoLists[0]);
-        console.log(this.toDoLists);
-    }*/
+
+    
 
     /**
      * Redo the current transaction if there is one.

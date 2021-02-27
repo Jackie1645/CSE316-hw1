@@ -22,7 +22,7 @@ export default class ToDoView {
         listElement.style.display = "flex";
         listElement.style.alignContent = "center";
         listElement.style.justifyContent = "center";
-        listElement.style.minHeight = "50px";
+        listElement.style.minHeight = "40px";
 
         listElement.appendChild(document.createTextNode(newList.name));
         listsElement.appendChild(listElement);
@@ -94,7 +94,13 @@ export default class ToDoView {
 
         for (let i = 0; i < list.items.length; i++) {
             
-            
+            let listItemElement = document.getElementsByClassName("list-item-control material-icons");
+            if (listItemElement[i].innerHTML == "keyboard_arrow_up") {
+                let up = listItemElement[i];
+                up.addEventListener("click,", function() {
+                    //let list = up.parentElement.parentElement;
+                });
+            }
             //console.log(list.items[i].status);
             //listItemElement.addEventListener("click", function() {
                 
