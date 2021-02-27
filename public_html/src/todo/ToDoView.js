@@ -65,15 +65,24 @@ export default class ToDoView {
 
         // GET RID OF ALL THE ITEMS
         this.clearItemsList();
-
+        
+        //rgb(233,237,240)
         for (let i = 0; i < list.items.length; i++) {
             // NOW BUILD ALL THE LIST ITEMS
             let listItem = list.items[i];
             let listItemElement = "<div id='todo-list-item-" + listItem.id + "' class='list-item-card'>"
-                                + "<div class='task-col'>" + listItem.description + "</div>"
-                                + "<div class='due-date-col'>" + listItem.dueDate + "</div>"
-                                + "<div class='status-col'>" + listItem.status + "</div>"
+                                + "<div class='task-col' contenteditable = true>" + listItem.description + "</div>"
+                                + "<div class='due-date-col'> <input type= \"date\" value = \"" + listItem.dueDate + "\" style='background-color:#40454e; border:none; color:#e9edf0;'> </div>"
+                                + "<div class='status-col'> <select name = 'Completion' style ='background-color:#40454e;border:none;color:#e9edf0;'>"
+                                + ((listItem.status == "complete") ?
+                            
+                                    "<option value = 'incomplete'>incomplete</option> \
+                                    <option value = 'complete' selected>complete</option> </select></div>"
+                                : 
+                                    "<option value = 'incomplete' selected>incomplete</option> \
+                                    <option value = 'complete' >complete</option> </select></div>")
                                 + "<div class='list-controls-col'>"
+
                                 + " <div class='list-item-control material-icons'>keyboard_arrow_up</div>"
                                 + " <div class='list-item-control material-icons'>keyboard_arrow_down</div>"
                                 + " <div class='list-item-control material-icons'>close</div>"
@@ -81,6 +90,15 @@ export default class ToDoView {
                                 + " <div class='list-item-control'></div>"
                                 + "</div>";
             itemsListDiv.innerHTML += listItemElement;
+        }
+
+        for (let i = 0; i < list.items.length; i++) {
+            
+            
+            //console.log(list.items[i].status);
+            //listItemElement.addEventListener("click", function() {
+                
+            //});
         }
     }
 
