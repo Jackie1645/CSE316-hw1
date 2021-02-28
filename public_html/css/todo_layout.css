@@ -6,6 +6,8 @@
     padding: 1px;
     grid-template-rows: 5% 95%;
     grid-template-columns: 12% 88%;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 #navbar {
@@ -16,11 +18,14 @@
 #left-sidebar {
     grid-column: 1 / span 1;
     grid-row: 2 / span 1;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 #left-sidebar-header {
-    display: grid;
-    grid-template-columns: 60% 40%;
+    display: flex;
+    align-items: center;
+    text-align: left;
 }
 
 #left-sidebar-header-text {
@@ -29,6 +34,14 @@
 
 #left-sidebar-controls {
     text-align: right;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-end;
+    float: right;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 #workspace {
@@ -41,10 +54,12 @@
 #todo-list-items-div{
     display: flex;
     flex-direction: column;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .list-item-card {
-    height: 5%;
+    height: 1.5em;
     display: flex;
     flex-direction: row;
 }
@@ -134,63 +149,6 @@
 	text-decoration:none;
 	text-shadow:0px 1px 0px #854629;
   }
-
-/*
-.modal {
-    display: inline-block;
-    position: fixed;
-    background-color: rgb(0, 0, 0);
+body {
+    margin: inherit;
 }
-
-.modal-box {
-    background-color: dimgrey;
-    margin: 15% auto;
-    margin: 75%;
-}*/
-/*
-.modal {
-    display: block;
-    position: fixed;
-    z-index: 1;
-    left: 35%;
-    top: 25%;
-    padding: 1%;
-    width: 30%;
-    animation: appear_in .3s ease;
-}
-.modal {
-    color: var(--light-gray);
-    background-color: var(--deep-blue);
-    border-radius: 3px;
-}
-.modal-header {
-    margin: 4%;
-    display: flex;
-    flex-direction: row;
-    height: 1%;
-    align-items: center;
-    align-content: center;
-    justify-content: space-between;
-}
-.modal-button {
-    margin-bottom: 2%;
-    margin-right: 2%;
-    margin-top: 2%;
-    width: 20%;
-    padding: 2%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 3px;
-    position: relative;
-}
-.modal-button {
-    background-color: var(--button-transparent);
-    font-family: 'Consolas';
-    border: none;
-    transition: 0.1s ease-in-out;
-    color: var(--light-gray);
-    text-align: center;
-    font-size: 12pt;
-}*/

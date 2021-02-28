@@ -13,20 +13,27 @@
     --swatch-text:          #e9edf0; /* USED IN MOUSE-OVER SELECTION OF TEXT AND BORDERS */ 
     --swatch-text-accent:   #ffc819; /* USED IN MOUSE-OVER SELECTION OF TEXT AND BORDERS */  
 
-    --font-primary:         'Lexend Exa', sans-serif;
+    --font-primary:         'Consolas';
 }
 
 #grid-container {
     background-color: var(--swatch-foundation);
     font-family: var(--font-primary);
+    font-weight: 700;
 }
 
 .grid-item {
     background-color: var(--swatch-primary);
+    display: flex;
+float: left;
+flex-direction: column;
 }
 
 #navbar {
     box-shadow: 2px 2px 2px var(--swatch-primary); 
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
 }
 
 #left-sidebar {
@@ -59,6 +66,15 @@
 
 .list-item-card {
     border-bottom: solid;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    margin-left: 1%;
+    margin-right: 3%;
+    margin-top: 1%;
+    width: 97%;
+
+
 }
 
 .todo_button {

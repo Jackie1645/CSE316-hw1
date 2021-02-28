@@ -80,14 +80,14 @@ export default class ToDoView {
             let listItemElement = "<div id='todo-list-item-" + listItem.id + "' class='list-item-card'>"
                                 + "<div class='task-col' contenteditable = true>" + listItem.description + "</div>"
                                 + "<div class='due-date-col'> <input type= \"date\" value = \"" + listItem.dueDate + "\" style='background-color:#40454e; border:none; color:#e9edf0;'> </div>"
-                                + "<div class='status-col'> <select name = 'Completion' style ='background-color:#40454e;border:none;color:#e9edf0;'>"
+                                + `<div class='status-col'> <select name = 'Completion' style ='background-color:#40454e;border:none;color:${listItem.status == "incomplete" ? "yellow" : "#ADD8E6"};'>`
                                 + ((listItem.status == "complete") ?
                             
-                                    "<option value = 'incomplete'>incomplete</option> \
-                                    <option value = 'complete' selected>complete</option> </select></div>"
+                                    "<option style='color:white;' value = 'incomplete'>incomplete</option> \
+                                    <option style='color:white;' value = 'complete' selected>complete</option> </select></div>"
                                 : 
-                                    "<option value = 'incomplete' selected>incomplete</option> \
-                                    <option value = 'complete' >complete</option> </select></div>")
+                                    "<option style='color:white;' value = 'incomplete' selected>incomplete</option> \
+                                    <option style='color:white;' value = 'complete' >complete</option> </select></div>")
                                 + "<div class='list-controls-col'>"
 
                                 + " <div class='list-item-control material-icons'>keyboard_arrow_up</div>"
@@ -99,32 +99,21 @@ export default class ToDoView {
             itemsListDiv.innerHTML += listItemElement;
         }
 
-        for (let i = 0; i < list.items.length; i++) {
-            
-            let listItemElement = document.getElementsByClassName("list-item-control material-icons");
-            if (listItemElement[i].innerHTML == "keyboard_arrow_up") {
-                let up = listItemElement[i];
-                up.addEventListener("click,", function() {
-                    //let list = up.parentElement.parentElement;
-                });
+        let status = document.getElementsByClassName("status-col");
+        for (let i = 0; i < status.length; i++) {
+            if (i == 0) continue;
+            let state = status[i].firstElementChild;
+            state.onchange = ()=> {
+                if (state.value == "incomplete") {
+                    state.style.color = "yellow";
+                }
+                else {
+                    state.style.color = "#ADD8E6";
+                }
             }
-            
-            let status = document.getElementsByClassName("status-col");
-            let state = status[i];
-            console.log(state);
-            state.addEventListener("change", function() {
-                if (state.innerHTML == "incomplete") {
-                    state.style.color = "orange";
-                }
-                if (state.innerHTML == "complete") {
-                    state.style.color = "blue";
-                }
-            });
-            //console.log(list.items[i].status);
-            //listItemElement.addEventListener("click", function() {
-                
-            //});
         }
+        
+        
     }
 
     // THE VIEW NEEDS THE CONTROLLER TO PROVIDE PROPER RESPONSES
