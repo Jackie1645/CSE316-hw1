@@ -30,7 +30,14 @@ export default class ToDoView {
         // SETUP THE HANDLER FOR WHEN SOMEONE MOUSE CLICKS ON OUR LIST
         let thisController = this.controller;
         listElement.onmousedown = function() {
+            for (var i = 0; i < listsElement.children.length; i++) {
+                listsElement.children.item(i).style.backgroundColor = "";
+                listsElement.children.item(i).style.color = "white";
+            }
             thisController.handleLoadList(newList.id);
+            listElement.style.backgroundColor = "rgb(255,200,25)";
+            listElement.style.color = "black";
+
             thisController.canControlLists = true;
             listsElement.insertBefore(listElement, listsElement.children.item(0));
         }
@@ -101,6 +108,18 @@ export default class ToDoView {
                     //let list = up.parentElement.parentElement;
                 });
             }
+            
+            let status = document.getElementsByClassName("status-col");
+            let state = status[i];
+            console.log(state);
+            state.addEventListener("change", function() {
+                if (state.innerHTML == "incomplete") {
+                    state.style.color = "orange";
+                }
+                if (state.innerHTML == "complete") {
+                    state.style.color = "blue";
+                }
+            });
             //console.log(list.items[i].status);
             //listItemElement.addEventListener("click", function() {
                 

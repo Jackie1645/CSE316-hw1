@@ -24,8 +24,22 @@ export default class ToDoController {
             appModel.redo();
         }
         document.getElementById("delete-list-button").onmousedown = function() {
-            appModel.removeCurrentList();
-            
+            var modal = document.getElementById("myModal");
+            var span = document.getElementsByClassName("close")[0];
+            var confirm = document.getElementsByClassName("modalConfirm")[0];
+            modal.style.display = "block";
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+            confirm.onclick = function() {
+                appModel.removeCurrentList();
+                modal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                  modal.style.display = "none";
+                }
+            } 
         }
         document.getElementById("add-item-button").onmousedown = function() {
             appModel.addNewItemTransaction();
@@ -34,6 +48,11 @@ export default class ToDoController {
             let grid = document.getElementById('todo-list-items-div');
             while (grid.hasChildNodes()) {
                 grid.removeChild(grid.firstChild);
+            }
+            let listsElement = document.getElementById("todo-lists-list");
+            for (var i = 0; i < listsElement.children.length; i++) {
+                listsElement.children.item(i).style.backgroundColor = "";
+                listsElement.children.item(i).style.color = "white";
             }
         }
     }

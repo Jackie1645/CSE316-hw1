@@ -18,6 +18,19 @@
                 Todo Tracker
             </div>
         </div>
+
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="document.getElementById('myModal').style.display ='none'">&times;</span>
+                <h1 class='modalText'>Delete List?</h1>
+                <p class="modalText">Are you sure you want to delete the list?</p>
+                <form style="height: 50%;">
+                    <button type="button" class="modalConfirm">Confirm</button>
+                    <button type="button" class="modalCancel" onclick="document.getElementById('myModal').style.display='none'">Cancel</button>
+                </form>
+            </div>
+        </div>
+
         <div id="left-sidebar" class="grid-item">
             <div id="left-sidebar-header" class="grid-item">
                 <span class="left-sidebar-header-text">Todolists</span>
