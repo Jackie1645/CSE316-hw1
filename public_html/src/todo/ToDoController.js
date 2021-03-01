@@ -62,4 +62,28 @@ export default class ToDoController {
         // UNLOAD THE CURRENT LIST AND INSTEAD LOAD THE CURRENT LIST
         this.model.loadList(listId);
     }
+
+    handleListUp(listItemId) {
+        this.model.moveItemUpTransaction(listItemId);
+    }
+
+    handleListDown(listItemId) {
+        this.model.moveItemDownTransaction(listItemId);
+    }
+    
+    handleTaskChange(oldDesc, newDesc, id) {
+        this.model.changeDescTransaction(oldDesc, newDesc, id);
+    }
+
+    handleDateChange(oldDate, newDate, id) {
+        this.model.changeDateTransaction(oldDate, newDate, id);
+    }
+
+    handleStatusChange(oldStatus, newStatus, id) {
+        this.model.changeStatusTransaction(oldStatus, newStatus, id);
+    }
+
+    handleItemDeletion(oldDesc, oldDate, oldStatus, id, index) {
+        this.model.removeItemTransaction(oldDesc, oldDate, oldStatus, id, index);
+    }
 }

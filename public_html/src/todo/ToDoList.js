@@ -78,4 +78,20 @@ export default class ToDoList {
     getItemAtIndex(index) {
         return this.items[index];
     }
+    
+    getItembyID(id) {
+        for (let i = 0; i < this.items.length; i++) {
+            if (id == this.items[i].getId()) {
+                return this.items[i];
+            }
+        }
+        return null;
+    }
+
+    swap(index1, index2) {
+        let item1 = this.items[index1]
+        let item2 = this.items[index2]
+        this.items[index2] = item1;
+        this.items[index1] = item2;
+    }
 }

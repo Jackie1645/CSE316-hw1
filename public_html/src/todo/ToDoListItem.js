@@ -24,6 +24,9 @@ export default class ToDoListItem {
     getId() {
         return this.id;
     }
+    setId(id) {
+        this.id = id;
+    }
 
     getDescription() {
         return this.description;

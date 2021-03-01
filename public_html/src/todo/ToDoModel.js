@@ -4,6 +4,12 @@ import ToDoList from './ToDoList.js'
 import ToDoListItem from './ToDoListItem.js'
 import jsTPS from '../common/jsTPS.js'
 import AddNewItem_Transaction from './transactions/AddNewItem_Transaction.js'
+import MoveItemUp_Transaction from './transactions/MoveItemUp_Transaction.js'
+import MoveItemDown_Transaction from './transactions/MoveItemDown_Transaction.js'
+import ChangeDescription_Transaction from './transactions/ChangeDescription_Transaction.js'
+import ChangeDueDate_Transaction from './transactions/ChangeDueDate_Transaction.js'
+import ChangeStatus_Transaction from './transactions/ChangeStatus_Transaction.js'
+import DeleteItem_Transaction from './transactions/DeleteItem_Transaction.js'
 
 /**
  * ToDoModel
@@ -62,8 +68,9 @@ export default class ToDoModel {
         newItem.setStatus(initStatus);
         list.addItem(newItem);
         if (this.currentList) {
-            this.view.refreshList(list);
+            this.view.viewList(list);
         }
+        return newItem;
     }
 
     /**
@@ -73,6 +80,36 @@ export default class ToDoModel {
      */
     addNewItemTransaction() {
         let transaction = new AddNewItem_Transaction(this);
+        this.tps.addTransaction(transaction);
+    }
+
+    moveItemUpTransaction(id) {
+        let transaction = new MoveItemUp_Transaction(this, id);
+        this.tps.addTransaction(transaction);
+    }
+
+    moveItemDownTransaction(id) {
+        let transaction = new MoveItemDown_Transaction(this, id);
+        this.tps.addTransaction(transaction);
+    }
+
+    changeDescTransaction(oldDesc, newDesc, id) {
+        let transaction = new ChangeDescription_Transaction(this, oldDesc, newDesc, id);
+        this.tps.addTransaction(transaction);
+    }
+    
+    changeDateTransaction(oldDate, newDate, id) {
+        let transaction = new ChangeDueDate_Transaction(this, oldDate, newDate, id);
+        this.tps.addTransaction(transaction);
+    }
+
+    changeStatusTransaction(oldStatus, newStatus, id) {
+        let transaction = new ChangeStatus_Transaction(this, oldStatus, newStatus, id);
+        this.tps.addTransaction(transaction);
+    }
+
+    removeItemTransaction(oldDesc, oldDate, oldStatus, id, index) {
+        let transaction = new DeleteItem_Transaction(this, oldDesc, oldDate, oldStatus, id, index);
         this.tps.addTransaction(transaction);
     }
 
@@ -166,6 +203,13 @@ export default class ToDoModel {
         this.view.refreshLists(this.toDoLists);
     }
 
+    getIndex(item) {
+        for (let i = 0; i < this.currentList.length; i++) {
+            if (this.currentList[i] == item) return i;
+        }
+        return null;
+    }
+
     // WE NEED THE VIEW TO UPDATE WHEN DATA CHANGES.
     setView(initView) {
         this.view = initView;
@@ -178,5 +222,45 @@ export default class ToDoModel {
         if (this.tps.hasTransactionToUndo()) {
             this.tps.undoTransaction();
         }
-    } 
+    }
+
+    changeTaskDesc(newDes, id) {
+        this.currentList.getItembyID(id).setDescription(newDes);
+        this.view.viewList(this.currentList);
+    }
+
+    changeDate(newDate, id) {
+        this.currentList.getItembyID(id).setDueDate(newDate);
+        this.view.viewList(this.currentList);
+    }
+
+    changeStatus(newStatus, id) {
+        this.currentList.getItembyID(id).setStatus(newStatus);
+        this.view.viewList(this.currentList);
+    }
+
+    moveUp(id) {
+        let item = this.currentList.getItembyID(id);
+        let index = this.currentList.getIndexOfItem(item);
+        if (index <= 0) {
+            return;
+        }
+        this.currentList.swap(index, index - 1);
+        this.view.viewList(this.currentList);
+    }
+    
+    moveDown(id) {
+        let item = this.currentList.getItembyID(id);
+        let index = this.currentList.getIndexOfItem(item);
+        if (index >= this.currentList.items.length - 1) {
+            return;
+        }
+        this.currentList.swap(index, index + 1);
+        this.view.viewList(this.currentList);
+    }
+
+    closeItem(id) {
+        this.currentList.removeItem(this.currentList.getItembyID(id));
+        this.view.viewList(this.currentList);
+    }
 }

@@ -99,6 +99,41 @@ export default class ToDoView {
             itemsListDiv.innerHTML += listItemElement;
         }
 
+        let thisController = this.controller;
+
+        let description = document.getElementsByClassName("task-col");
+        for (let i = 0; i < description.length; i++) {
+            if (description[i].id == "close-list-button") {
+                continue;
+            }
+            description[i].onblur = function(mv) {
+                var old = thisController.model.currentList.getItembyID(description[i].parentElement.id.slice(15)).getDescription();
+                thisController.handleTaskChange(old, mv.target.innerHTML, description[i].parentElement.id.slice(15));
+            }
+        }
+
+        let dates = document.getElementsByClassName("due-date-col");
+        for (let i = 0; i < dates.length; i++) {
+            if (dates[i].id == "date-col-header") {
+                continue;
+            }
+            dates[i].onchange = function() {
+                var old = thisController.model.currentList.getItembyID(description[i].parentElement.id.slice(15)).getDueDate();
+                thisController.handleDateChange(old, dates[i].children[0].value, dates[i].parentElement.id.slice(15));
+            }
+        }
+
+        let states = document.getElementsByClassName("status-col");
+        for (let i = 0; i < states.length; i++) {
+            if (states[i].id == "status-col-header") {
+                continue;
+            }
+            states[i].onchange = function() {
+                var old = thisController.model.currentList.getItembyID(description[i].parentElement.id.slice(15)).getStatus();
+                thisController.handleStatusChange(old, states[i].firstElementChild.value, states[i].parentElement.id.slice(15));
+            }
+        }
+
         let status = document.getElementsByClassName("status-col");
         for (let i = 0; i < status.length; i++) {
             if (i == 0) continue;
@@ -112,7 +147,34 @@ export default class ToDoView {
                 }
             }
         }
+
+
         
+        let direction = document.getElementsByClassName("list-item-control material-icons");
+        for (let i = 0; i < direction.length; i++) {
+            let item = direction[i].parentElement.parentElement;
+            if (direction[i].innerHTML == "keyboard_arrow_up") {
+                direction[i].onclick = function() {
+                    thisController.handleListUp(item.id.slice(15));
+                }
+            }
+            if (direction[i].innerHTML == "keyboard_arrow_down") {
+                direction[i].onclick = function() {
+                    thisController.handleListDown(item.id.slice(15));
+                }
+            }
+            if (direction[i].innerHTML == "close") {
+                if (direction[i].id == "close-list-button") {
+                    continue;
+                }
+                direction[i].onclick = function() {
+                    var deletion = thisController.model.currentList.getItembyID(item.id.slice(15));
+                    let elem = thisController.model.currentList.getItembyID(item.id.slice(15));
+                    let index = thisController.model.currentList.getIndexOfItem(elem);
+                    thisController.handleItemDeletion(deletion.getDescription(), deletion.getDueDate(), deletion.getStatus(), item.id.slice(15), index);
+                }
+            }
+        }
         
     }
 
