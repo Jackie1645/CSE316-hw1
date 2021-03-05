@@ -13,6 +13,39 @@ export default class ToDoController {
         this.model = initModel;
         let appModel = this.model;
 
+        document.onclick = function() {
+            if (appModel.tps.hasTransactionToUndo()) {
+                document.getElementById("undo-button").style.color = "";
+            }
+            else {
+                document.getElementById("undo-button").style.color = "rgb(128,128,128)";
+            }
+
+            if (appModel.tps.hasTransactionToRedo()) {
+                document.getElementById("redo-button").style.color = "";
+            }
+            else {
+                document.getElementById("redo-button").style.color = "rgb(128,128,128)";
+            }
+
+            if (window.localStorage.getItem("view") === 'false') {
+                document.getElementById("add-item-button").style.color = "rgb(128,128,128)";
+                document.getElementById("delete-list-button").style.color = "rgb(128,128,128)";
+                document.getElementById("close-list-button").style.color = "rgb(128,128,128)";
+                document.getElementById("add-item-button").onmousedown = function() {}
+                document.getElementById("delete-list-button").onmousedown = function() {}
+                document.getElementById("close-list-button").onmousedown = function() {}
+                document.getElementById("add-list-button").style.color = "#ffc800";
+                document.getElementById("add-list-button").onmousedown = function() {
+                    appModel.addNewList();
+                }
+            }
+            else {
+                document.getElementById("add-list-button").style.color = "rgb(128,128,128)";
+                document.getElementById("add-list-button").onmousedown = function() {}
+            }
+        }
+
         // SETUP ALL THE EVENT HANDLERS SINCE THEY USE THE MODEL
         document.getElementById("add-list-button").onmousedown = function() {
             appModel.addNewList();
@@ -24,6 +57,8 @@ export default class ToDoController {
             appModel.redo();
         }
         document.getElementById("delete-list-button").onmousedown = function() {
+            window.localStorage.setItem("view", false);
+
             var modal = document.getElementById("myModal");
             var span = document.getElementsByClassName("close")[0];
             var confirm = document.getElementsByClassName("modalConfirm")[0];
@@ -39,12 +74,13 @@ export default class ToDoController {
                 if (event.target == modal) {
                   modal.style.display = "none";
                 }
-            } 
+            }
         }
         document.getElementById("add-item-button").onmousedown = function() {
             appModel.addNewItemTransaction();
         }
         document.getElementById("close-list-button").onmousedown = function() {
+            window.localStorage.setItem("view", false);
             let grid = document.getElementById('todo-list-items-div');
             while (grid.hasChildNodes()) {
                 grid.removeChild(grid.firstChild);

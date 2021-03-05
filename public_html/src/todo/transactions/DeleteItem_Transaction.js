@@ -24,6 +24,7 @@ export default class DeleteItem_Transaction extends jsTPS_Transaction {
         while (this.model.currentList.getIndexOfItem(item) > this.index) {
             this.model.moveUp(item.getId());
         }
-        item.setId(this.id);
+        //item.setId(this.id);
+        this.id = item.getId();
     }
 }

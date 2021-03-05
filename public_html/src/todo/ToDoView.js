@@ -30,6 +30,10 @@ export default class ToDoView {
         // SETUP THE HANDLER FOR WHEN SOMEONE MOUSE CLICKS ON OUR LIST
         let thisController = this.controller;
         listElement.onmousedown = function() {
+            window.localStorage.setItem("view", true);
+
+            thisController.model.tps.clearAllTransactions();
+
             for (var i = 0; i < listsElement.children.length; i++) {
                 listsElement.children.item(i).style.backgroundColor = "";
                 listsElement.children.item(i).style.color = "white";
@@ -38,7 +42,6 @@ export default class ToDoView {
             listElement.style.backgroundColor = "rgb(255,200,25)";
             listElement.style.color = "black";
 
-            thisController.canControlLists = true;
             listsElement.insertBefore(listElement, listsElement.children.item(0));
         }
     }
@@ -101,6 +104,48 @@ export default class ToDoView {
 
         let thisController = this.controller;
 
+        document.getElementById("add-item-button").style.color = "";
+        document.getElementById("delete-list-button").style.color = "";
+        document.getElementById("close-list-button").style.color = "";
+
+        document.getElementById("add-item-button").onmousedown = function() {
+            thisController.model.addNewItemTransaction();
+        }
+        document.getElementById("delete-list-button").onmousedown = function() {
+            window.localStorage.setItem("view", false);
+
+            var modal = document.getElementById("myModal");
+            var span = document.getElementsByClassName("close")[0];
+            var confirm = document.getElementsByClassName("modalConfirm")[0];
+            modal.style.display = "block";
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+            confirm.onclick = function() {
+                thisController.model.removeCurrentList();
+                modal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                  modal.style.display = "none";
+                }
+            }
+        }
+
+        document.getElementById("close-list-button").onmousedown = function() {
+            window.localStorage.setItem("view", false);
+            let grid = document.getElementById('todo-list-items-div');
+            while (grid.hasChildNodes()) {
+                grid.removeChild(grid.firstChild);
+            }
+            let listsElement = document.getElementById("todo-lists-list");
+            for (var i = 0; i < listsElement.children.length; i++) {
+                listsElement.children.item(i).style.backgroundColor = "";
+                listsElement.children.item(i).style.color = "white";
+            }
+        }
+
+
         let description = document.getElementsByClassName("task-col");
         for (let i = 0; i < description.length; i++) {
             if (description[i].id == "close-list-button") {
@@ -154,11 +199,19 @@ export default class ToDoView {
         for (let i = 0; i < direction.length; i++) {
             let item = direction[i].parentElement.parentElement;
             if (direction[i].innerHTML == "keyboard_arrow_up") {
+                if (i == 3) {
+                    direction[i].style.color = "rgb(128,128,128)";
+                    continue;
+                }
                 direction[i].onclick = function() {
                     thisController.handleListUp(item.id.slice(15));
                 }
             }
             if (direction[i].innerHTML == "keyboard_arrow_down") {
+                if (i == direction.length - 2) {
+                    direction[i].style.color = "rgb(128,128,128)";
+                    continue;
+                }
                 direction[i].onclick = function() {
                     thisController.handleListDown(item.id.slice(15));
                 }
@@ -168,7 +221,7 @@ export default class ToDoView {
                     continue;
                 }
                 direction[i].onclick = function() {
-                    var deletion = thisController.model.currentList.getItembyID(item.id.slice(15));
+                    let deletion = thisController.model.currentList.getItembyID(item.id.slice(15));
                     let elem = thisController.model.currentList.getItembyID(item.id.slice(15));
                     let index = thisController.model.currentList.getIndexOfItem(elem);
                     thisController.handleItemDeletion(deletion.getDescription(), deletion.getDueDate(), deletion.getStatus(), item.id.slice(15), index);

@@ -32,6 +32,11 @@
     
 }
 
+div#todo-list-items-div div.list-item-card div.task-col {
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+}
+
 #left-sidebar-controls {
     text-align: right;
     display: flex;
@@ -151,4 +156,14 @@
   }
 body {
     margin: inherit;
+    overflow: hidden;
+}
+
+#todo-list-items-div .list-item-card:hover {
+    background-color: var(--swatch-complement);
+}
+
+.list-item-card .material-icons:hover {
+    background-color: rgb(96,96,96);
+    border-radius: 10px;
 }
